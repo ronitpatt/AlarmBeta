@@ -31,6 +31,7 @@ const HomeScreen = ({route, navigation}) => {
       content: {
         title: 'Wake up!',
         body: 'You have new notifications.',
+        sound: 'sunny.wav',
       },
       trigger: {
         seconds: (route.params.alarmTime - currTime) / 1000,

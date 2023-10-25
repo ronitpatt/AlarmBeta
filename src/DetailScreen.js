@@ -1,25 +1,55 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Text, View } from 'react-native';
 import { Button, Pressable, StyleSheet } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Switch } from 'react-native-gesture-handler';
+import * as Notifications from 'expo-notifications';
+
 // import EditScreenInfo from '../../components/EditScreenInfo';
 // import { SafeAreaView } from 'react-native';
 // import { NavigationContainer } from '@react-navigation/native';
 
 const DetailScreen = ({navigation}) => {
   let setTime = new Date();
+  let currTime = new Date().getTime();
   const repeat = 'Never';
   const label = 'Alarm 1';
   const sound = 'Music';
   let isEnabled = false;
 
+  useEffect(() => {
+    (async () => {
+      const {status} = await Notifications.requestPermissionsAsync();
+      if (status !== 'granted') {
+        alert('No notification permissions!');
+      }
+    })();
+  }, []);
+
+  const sendNotification = async () => {
+    let temp = (setTime.getTime() / 60000) * 60000;
+    console.log("time of temp");
+    console.log(temp);
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Wake up!',
+        body: 'You have new notifications.',
+      },
+      trigger: {
+        seconds: (temp - currTime) / 1000,
+      },
+    });
+  };
+
   const setNewTime = (DateTimePickerEvent, newTime) => {
     setTime = newTime;
-    console.log(setTime);
+    currTime = new Date().getTime();
+    // console.log(setTime.getTime());
+    console.log(currTime);
   };
 
   const saveAlarm = () => {
+    sendNotification();
     navigation.navigate('Home', {
         alarmTime: setTime.getTime()
     });
