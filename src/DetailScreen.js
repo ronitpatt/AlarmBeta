@@ -7,7 +7,7 @@ import { Switch } from 'react-native-gesture-handler';
 // import { SafeAreaView } from 'react-native';
 // import { NavigationContainer } from '@react-navigation/native';
 
-const DetailScreen = () => {
+const DetailScreen = ({navigation}) => {
   let setTime = new Date();
   const repeat = 'Never';
   const label = 'Alarm 1';
@@ -17,6 +17,12 @@ const DetailScreen = () => {
   const setNewTime = (DateTimePickerEvent, newTime) => {
     setTime = newTime;
     console.log(setTime);
+  };
+
+  const saveAlarm = () => {
+    navigation.navigate('Home', {
+        alarmTime: setTime.getTime()
+    });
   };
 
   return (
@@ -29,7 +35,10 @@ const DetailScreen = () => {
           <Button title='Cancel' onPress={() => {
             console.log("Cancel")
           }}></Button>
-          <Button title='Save' onPress={() => {console.log("Save")}}></Button>
+          <Button
+            title='Save'
+            onPress={saveAlarm}
+          ></Button>
       </View>
       
       <DateTimePicker style={{paddingBottom: '5%'}} mode='time' display='spinner' value={setTime} onChange={setNewTime} />
@@ -54,7 +63,18 @@ const DetailScreen = () => {
     //     <View style={{ flex: 1, backgroundColor: 'green' }} />
     // );
 };
-export default DetailScreen;
+
+
+// DetailScreen.navigationOptions = ({navigation}) => ({
+//     headerRight: () => (
+//       <Button
+//         onPress={() => navigation.navigate('Home')}
+//         title="Save"
+//         color="#000"
+//       />
+//     ),
+//   }); 
+  // look into this code
  
 
 const styles = StyleSheet.create({
@@ -87,3 +107,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
+
+export default DetailScreen;

@@ -11,7 +11,12 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({route, navigation}) => {
+  const alarmTime = route.params;
+  const currTime = new Date().getTime();
+  // console.log(alarmTime);
+  // console.log(currTime);
+  // console.log(alarmTime - currTime);
   useEffect(() => {
     (async () => {
       const {status} = await Notifications.requestPermissionsAsync();
@@ -28,7 +33,7 @@ const HomeScreen = ({navigation}) => {
         body: 'You have new notifications.',
       },
       trigger: {
-        seconds: 5,
+        seconds: (route.params.alarmTime - currTime) / 1000,
       },
     });
   };
