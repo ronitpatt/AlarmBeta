@@ -4,13 +4,14 @@ import { Button, Pressable, StyleSheet } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Switch } from 'react-native-gesture-handler';
 import * as Notifications from 'expo-notifications';
+import { useState } from 'react'
 
 // import EditScreenInfo from '../../components/EditScreenInfo';
 // import { SafeAreaView } from 'react-native';
 // import { NavigationContainer } from '@react-navigation/native';
 
 const DetailScreen = ({navigation}) => {
-  let setTime = new Date();
+  let setTime = new Date();  
   let currTime = new Date().getTime();
   const repeat = 'Never';
   const label = 'Alarm 1';
@@ -27,16 +28,24 @@ const DetailScreen = ({navigation}) => {
   }, []);
 
   const sendNotification = async () => {
-    let temp = (setTime.getTime() / 60000) * 60000;
-    console.log("time of temp");
-    console.log(temp);
+    // let temp = Math.floor(setTime.getTime() / 100000) * 100000;
+    
+
+    const triggerTime = setTime;
+    // triggerTime.setHours(7); // set the hour for the notification
+    // triggerTime.setMinutes(30); // set the minute for the notification
     await Notifications.scheduleNotificationAsync({
       content: {
         title: 'Wake up!',
         body: 'You have new notifications.',
       },
+    //   trigger: {
+    //     seconds: ((temp - currTime) / 1000) - seconds_minus,
+    //   },
       trigger: {
-        seconds: (temp - currTime) / 1000,
+        hour: triggerTime.getHours(),
+        minute: triggerTime.getMinutes(),
+        repeats: false
       },
     });
   };
@@ -45,10 +54,12 @@ const DetailScreen = ({navigation}) => {
     setTime = newTime;
     currTime = new Date().getTime();
     // console.log(setTime.getTime());
-    console.log(currTime);
+    let temp = Math.floor(setTime.getTime() / 1000) * 1000;
   };
 
   const saveAlarm = () => {
+    console.log("currTime when you save alarm");
+    console.log(currTime);
     sendNotification();
     navigation.navigate('Home', {
         alarmTime: setTime.getTime()
