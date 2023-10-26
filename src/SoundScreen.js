@@ -1,9 +1,6 @@
 import React, {useEffect} from 'react';
 import { Text, View } from 'react-native';
-import { Button, Pressable, StyleSheet } from 'react-native';
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { Switch } from 'react-native-gesture-handler';
-import * as Notifications from 'expo-notifications';
+import { Button, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native';
 
 // import { useState } from 'react'
