@@ -4,14 +4,16 @@ import { Button, Pressable, StyleSheet } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Switch } from 'react-native-gesture-handler';
 import * as Notifications from 'expo-notifications';
-import { useState } from 'react'
+import useAlarms from './hooks/useAlarms';
 
 // import EditScreenInfo from '../../components/EditScreenInfo';
 // import { SafeAreaView } from 'react-native';
 // import { NavigationContainer } from '@react-navigation/native';
 
 const DetailScreen = ({navigation}) => {
-  let setTime = new Date();  
+  const { alarms, setAlarms } = useAlarms()
+
+  let setTime = new Date();
   let currTime = new Date().getTime();
   const repeat = 'Never';
   const label = 'Alarm 1';
@@ -61,6 +63,7 @@ const DetailScreen = ({navigation}) => {
     console.log("currTime when you save alarm");
     console.log(currTime);
     sendNotification();
+    setAlarms(prev => [...prev, { hour: setTime.getHours(), minutes: setTime.getMinutes()}])
     navigation.navigate('Home', {
         alarmTime: setTime.getTime()
     });
