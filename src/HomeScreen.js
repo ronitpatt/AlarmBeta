@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, Button, View} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { FontAwesome } from '@expo/vector-icons';
-
+import AlarmPanel from './components/alarmPanel';
+import useAlarms from './hooks/useAlarms';
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -12,6 +13,7 @@ Notifications.setNotificationHandler({
 });
 
 const HomeScreen = ({route, navigation}) => {
+  const { alarms, setAlarms } = useAlarms()
   const alarmTime = route.params;
   const currTime = new Date().getTime();
   // console.log(alarmTime);
@@ -42,8 +44,13 @@ const HomeScreen = ({route, navigation}) => {
   return (
     <>
     <FontAwesome style={styles.title}>Alarmify</FontAwesome>
+    {alarms.map(({ hour, minutes}) => (
+          <AlarmPanel hour={hour} minutes={minutes} />
+    ))}
+    <Button title="Add Alarm" onPress={() => setAlarms(prev => [...prev, { hour: 11, minutes: 30}])} />
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'lightgreen' }}>
       <Button title="Send notification" onPress={sendNotification} />
+      
     </View>
     </>
   );
