@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './src/HomeScreen';
 import DetailScreen from './src/DetailScreen';
+import SoundScreen from './src/SoundScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
           options={HomeScreen.navigationOptions}
         />
         <Stack.Screen name="Details" component={DetailScreen} />
+        <Stack.Screen name="Sound" component={SoundScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
