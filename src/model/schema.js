@@ -6,12 +6,11 @@ export default appSchema({
     tableSchema({
       name: 'alarms',
       columns: [
-        { name: 'id', type: 'number' },
         { name: 'name', type: 'string' },
-        { name: 'repeat', type: 'boolean' },
         { name: 'sound', type: 'string' },
-        { name: 'time', type: 'string'},
-        { name: 'snooze', type: 'boolean' },
+        { name: 'time_at', type: 'number'},
+        { name: 'is_snooze', type: 'boolean' },
+        { name: 'is_on', type: 'boolean'}
       ]
     }),
   ]
