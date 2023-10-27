@@ -5183,6 +5183,7 @@ __metadata:
     react-native-reanimated: "npm:^3.5.4"
     react-native-safe-area-context: "npm:^4.7.3"
     react-native-screens: "npm:^3.27.0"
+    react-swipe-to-delete-ios: "npm:^2.1.0"
   languageName: unknown
   linkType: soft
 
@@ -7961,6 +7962,15 @@ __metadata:
   peerDependencies:
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: c194d741792e86043a4ae272f7353c1cb9412bc649945c4220c6a101a6ea5410cceb3d65d5a4d750f11a24f7426e8eec7977e8a4e3ad5d3ee235ca2b18166fa8
+  languageName: node
+  linkType: hard
+
+"react-swipe-to-delete-ios@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "react-swipe-to-delete-ios@npm:2.1.0"
+  peerDependencies:
+    react: ^16.18.0 || ^17 || ^18
+  checksum: 04f5ce6c66dd4c067360ace39901959bd78fb01b0d9ee47b1ee018f67183e185c5d50fb1ed863bf6560b7909ef51f34f82f8c3604d4b1c8820b338e2aeab58c8
   languageName: node
   linkType: hard
 
