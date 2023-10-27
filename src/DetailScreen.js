@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Text, View } from 'react-native';
 import { Button, Pressable, StyleSheet } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
@@ -12,13 +12,13 @@ import useAlarms from './hooks/useAlarms';
 
 const DetailScreen = ({navigation}) => {
   const { alarms, setAlarms } = useAlarms()
+  const [isEnabled, setIsEnabled] = useState(false);
 
   let setTime = new Date();
   let currTime = new Date().getTime();
   const repeat = 'Never';
   const label = 'Alarm 1';
   const sound = 'Music';
-  let isEnabled = false;
 
   useEffect(() => {
     (async () => {
@@ -63,15 +63,28 @@ const DetailScreen = ({navigation}) => {
     console.log("currTime when you save alarm");
     console.log(currTime);
     sendNotification();
-    setAlarms(prev => [...prev, { hour: setTime.getHours(), minutes: setTime.getMinutes()}])
+    let am = false;
+    if(setTime.getHours() < 12)
+    {
+      am = true;
+    }
+    let hours = (setTime.getHours() + 24) % 12 || 12;
+    setAlarms(prev => [...prev, { hour: hours, minutes: setTime.getMinutes(), am: am}])
     navigation.navigate('Home', {
         alarmTime: setTime.getTime()
     });
   };
 
   const pickSound = () => {
-    console.log("picked sound");
     navigation.navigate('Sound');
+  }
+
+  const cancelButton = () => {
+    navigation.navigate('Home');
+  }
+
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
   }
 
   return (
@@ -81,9 +94,9 @@ const DetailScreen = ({navigation}) => {
       </View>
       
       <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between'}}>
-          <Button title='Cancel' onPress={() => {
-            console.log("Cancel")
-          }}></Button>
+          <Button 
+            title='Cancel' 
+            onPress={cancelButton}></Button>
           <Button
             title='Save'
             onPress={saveAlarm}
@@ -96,14 +109,15 @@ const DetailScreen = ({navigation}) => {
         <Pressable onPress={() => {console.log('Repeat')}} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%'}}><Text style={{position: 'relative', fontSize: 20}}>Repeat</Text><Text style={{textAlign: 'right', fontSize: 20}}>{repeat}{'>'}</Text></Pressable>
         <Pressable onPress={() => {console.log('Label')}} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}><Text style={{position: 'relative', fontSize: 20}}>Label</Text><Text style={{textAlign: 'right', fontSize: 20}}>{label} </Text></Pressable>
         <Pressable onPress={pickSound} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}><Text style={{position: 'relative', fontSize: 20}}>Sound</Text><Text style={{textAlign: 'right', fontSize: 20}}>{sound} {'>'} </Text></Pressable>
-        <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}><Text style={{position: 'relative', fontSize: 20}}>Snooze</Text><Switch trackColor={{false: '#767577', true: '#81b0ff'}}
-        thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={() => {
-            isEnabled=!isEnabled
-            console.log('snooze change')}
-        }
-        value={isEnabled}/></View>
+        <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}>
+          <Text style={{position: 'relative', fontSize: 20}}>Snooze</Text>
+          <Switch 
+            trackColor={{false: '#767577', true: '#1ED760'}}
+            thumbColor={isEnabled ? '#FFFFFF' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}/>
+        </View>
       </View>
       <View style={{padding: '10%'}}></View>
    </View>

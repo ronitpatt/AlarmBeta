@@ -1,11 +1,12 @@
 import { View, Text, Switch, StyleSheet } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 
-export default function AlarmPanel({ hour, minutes }) {
+export default function AlarmPanel({ hour, minutes, am }) {
   return (
   <View style={styles.panelContainer}> 
     <FontAwesome style={styles.timeDigits}>
-    {hour}:{minutes}<FontAwesome style={styles.timeOfDay}>AM</FontAwesome>
+    {hour}:{minutes}<FontAwesome style={styles.timeOfDay}>
+      {am ? "AM" : "PM"}</FontAwesome>
     </FontAwesome>
     <Switch />
   </View>
