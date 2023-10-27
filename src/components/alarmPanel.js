@@ -5,7 +5,7 @@ export default function AlarmPanel({ hour, minutes, am }) {
   return (
   <View style={styles.panelContainer}> 
     <FontAwesome style={styles.timeDigits}>
-    {hour}:{minutes}<FontAwesome style={styles.timeOfDay}>
+    {hour}:{minutes < 10 ? "0" + minutes : minutes}<FontAwesome style={styles.timeOfDay}>
       {am ? "AM" : "PM"}</FontAwesome>
     </FontAwesome>
     <Switch />

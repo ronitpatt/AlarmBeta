@@ -2539,12 +2539,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/datetimepicker@npm:^7.6.1":
-  version: 7.6.1
-  resolution: "@react-native-community/datetimepicker@npm:7.6.1"
+"@react-native-community/datetimepicker@npm:7.2.0":
+  version: 7.2.0
+  resolution: "@react-native-community/datetimepicker@npm:7.2.0"
   dependencies:
     invariant: "npm:^2.2.4"
-  checksum: 20d9b35747532e2031b981305f16998e1bd4c651e2c44cd65c4dd5bd4ebe66fd0ed49292bc6883821faf56c1cb3698b16c2b8fb1e9782b8c6f00f3506cf8ee55
+  checksum: 19579fe59dbdff7410b07034973a72fcac6c37214c5665c9665590017403ea33ba44e0c98780b4037169c22119ee1d81099d897fd1bd97d85fe9457f480f3f2b
   languageName: node
   linkType: hard
 
@@ -5231,7 +5231,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.20.0"
     "@nozbe/watermelondb": "npm:^0.27.1"
-    "@react-native-community/datetimepicker": "npm:^7.6.1"
+    "@react-native-community/datetimepicker": "npm:7.2.0"
     "@react-native-community/masked-view": "npm:^0.1.11"
     "@react-native-community/push-notification-ios": "npm:^1.11.0"
     "@react-navigation/native": "npm:^6.1.9"
@@ -5242,11 +5242,11 @@ __metadata:
     expo-status-bar: "npm:~1.6.0"
     react: "npm:18.2.0"
     react-native: "npm:0.72.6"
-    react-native-gesture-handler: "npm:^2.13.4"
+    react-native-gesture-handler: "npm:~2.12.0"
     react-native-push-notification: "npm:^8.1.1"
-    react-native-reanimated: "npm:^3.5.4"
-    react-native-safe-area-context: "npm:^4.7.3"
-    react-native-screens: "npm:^3.27.0"
+    react-native-reanimated: "npm:~3.3.0"
+    react-native-safe-area-context: "npm:4.6.3"
+    react-native-screens: "npm:~3.22.0"
   languageName: unknown
   linkType: soft
 
@@ -7912,9 +7912,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-gesture-handler@npm:^2.13.4":
-  version: 2.13.4
-  resolution: "react-native-gesture-handler@npm:2.13.4"
+"react-native-gesture-handler@npm:~2.12.0":
+  version: 2.12.1
+  resolution: "react-native-gesture-handler@npm:2.12.1"
   dependencies:
     "@egjs/hammerjs": "npm:^2.0.17"
     hoist-non-react-statics: "npm:^3.3.0"
@@ -7924,7 +7924,7 @@ __metadata:
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 87820d12550eaa4904b8f4b0d29579fecd51df62d558e56adbc382324a8fe176aac92384a2b4dd3809006c9628688a7c844ac1b95d5982680e867fffd9fb2839
+  checksum: 4d4271d26d8a9f799987c05652793baf3e57cf71debb3940e8f37d84f026ee38b7d0d3a3d26774b9f111d033ffedc8db4303c6b1f52155b6bee33774e83592f1
   languageName: node
   linkType: hard
 
@@ -7938,9 +7938,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:^3.5.4":
-  version: 3.5.4
-  resolution: "react-native-reanimated@npm:3.5.4"
+"react-native-reanimated@npm:~3.3.0":
+  version: 3.3.0
+  resolution: "react-native-reanimated@npm:3.3.0"
   dependencies:
     "@babel/plugin-transform-object-assign": "npm:^7.16.7"
     "@babel/preset-typescript": "npm:^7.16.7"
@@ -7955,30 +7955,30 @@ __metadata:
     "@babel/plugin-transform-template-literals": ^7.0.0-0
     react: "*"
     react-native: "*"
-  checksum: 68182fdc5725bee1220f06a850eb94d81f119d8e661d55be601d83ebfd01268e84529ab5677691dc3d5f408378b30ef059834f8859c3e4584c5e97754619d3f5
+  checksum: 1b5003a01292e0c82edcf9a5c156e6746e00a307635ed1b45fcc804c93ceedfbf5259a4b6c21afe25a3afe459401fad36128ecee89e6f5d929ea28277be3d1c5
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:^4.7.3":
-  version: 4.7.3
-  resolution: "react-native-safe-area-context@npm:4.7.3"
+"react-native-safe-area-context@npm:4.6.3":
+  version: 4.6.3
+  resolution: "react-native-safe-area-context@npm:4.6.3"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 9bc61290fb21c0c424736c25ee733134aca67016260ee1ba046ecdb8c0409fda91d50b0050fc922eac4e827cae0d9d7b014b7a19511f7d1ffa2a22ff4c9041d7
+  checksum: 6147b46a4e31f14c2f7974ff186a602527e9dd30dcefb53cade6193db1a1bf39ad7d54adf10da4fdb8209be304ca751589d60d77eadf54ee2b80952538519395
   languageName: node
   linkType: hard
 
-"react-native-screens@npm:^3.27.0":
-  version: 3.27.0
-  resolution: "react-native-screens@npm:3.27.0"
+"react-native-screens@npm:~3.22.0":
+  version: 3.22.1
+  resolution: "react-native-screens@npm:3.22.1"
   dependencies:
     react-freeze: "npm:^1.0.0"
     warn-once: "npm:^0.1.0"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 30d0275d1a41915e3b2ca151854ca41ceed0bbdc6baf782e5e886a5842b92e003bb2183e4017bd6b03ee7000ec6312a6570a02901c1a990d0fefcdcf511f1e06
+  checksum: 03d3c2fcccd6afe4b25c35396eb0280997724add60e4c2074572106237c5e299895ec8aa399ce23ba8c800663389a7dde8c6033b8c9f49064651298ead23c3ca
   languageName: node
   linkType: hard
 
