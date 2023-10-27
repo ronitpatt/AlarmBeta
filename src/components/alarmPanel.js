@@ -20,7 +20,7 @@ const renderRightActions = (progress, dragX, onDelete) => {
   );
 };
 
-export default function AlarmPanel({ hour, minutes, onDelete }) { // add index here 
+export default function AlarmPanel({ hour, minutes, am, onDelete }) { // add index here 
   onDelete = () => {
     console.log("Delete function called.");
   };
@@ -29,9 +29,10 @@ export default function AlarmPanel({ hour, minutes, onDelete }) { // add index h
       renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, onDelete)}
     >
     <View style={styles.panelContainer}> 
-      <FontAwesome style={styles.timeDigits}>
-      {hour}:{minutes}<FontAwesome style={styles.timeOfDay}>AM</FontAwesome>
-      </FontAwesome>
+    <FontAwesome style={styles.timeDigits}>
+    {hour}:{minutes < 10 ? "0" + minutes : minutes}<FontAwesome style={styles.timeOfDay}>
+      {am ? "AM" : "PM"}</FontAwesome>
+    </FontAwesome>
       <Switch />
     </View>
     </Swipeable>
