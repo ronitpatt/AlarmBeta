@@ -47,11 +47,6 @@ const HomeScreen = ({route, navigation}) => {
     {alarms.map(({ hour, minutes, am}) => (
           <AlarmPanel hour={hour} minutes={minutes} am={am} />
     ))}
-    <Button title="Add Alarm" onPress={() => setAlarms(prev => [...prev, { hour: 11, minutes: 30}])} />
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'lightgreen' }}>
-      <Button title="Send notification" onPress={sendNotification} />
-      
-    </View>
     </>
   );
 };
