@@ -47,8 +47,8 @@ const HomeScreen = ({route, navigation}) => {
   return (
     <>
     <FontAwesome style={styles.title}>Alarmify</FontAwesome>
-    {alarms.map(({ hour, minutes, am}) => (
-          <AlarmPanel hour={hour} minutes={minutes} am={am} />
+    {alarms.map(({ index, hour, minutes, am}) => (
+          <AlarmPanel key={index} hour={hour} minutes={minutes} am={am} />
     ))}
     </>
   );

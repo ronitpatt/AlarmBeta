@@ -70,7 +70,8 @@ const DetailScreen = ({navigation}) => {
       am = true;
     }
     let hours = (setTime.getHours() + 24) % 12 || 12;
-    setAlarms(prev => [...prev, { hour: hours, minutes: setTime.getMinutes(), am: am}])
+    const trimmedDate = setTime.toISOString().substring(0, 16); // "2023-10-30T17:02"
+    setAlarms(prev => [...prev, { index: trimmedDate, hour: hours, minutes: setTime.getMinutes(), am: am}])
     navigation.navigate('Home', {
         alarmTime: setTime.getTime()
     });
