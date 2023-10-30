@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import { View, Text, Switch, StyleSheet, TouchableOpacity, Animated } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -21,9 +22,16 @@ const renderRightActions = (progress, dragX, onDelete) => {
 };
 
 export default function AlarmPanel({ hour, minutes, am, onDelete }) { // add index here 
+  const [isEnabled, setIsEnabled] = useState(false);
+  
   onDelete = () => {
     console.log("Delete function called.");
   };
+
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
+  };
+
   return (
     <Swipeable
       renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, onDelete)}
@@ -33,7 +41,12 @@ export default function AlarmPanel({ hour, minutes, am, onDelete }) { // add ind
     {hour}:{minutes < 10 ? "0" + minutes : minutes}<FontAwesome style={styles.timeOfDay}>
       {am ? "AM" : "PM"}</FontAwesome>
     </FontAwesome>
-      <Switch />
+    <Switch 
+            trackColor={{false: '#767577', true: '#1ED760'}}
+            thumbColor={isEnabled ? '#FFFFFF' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}/>
     </View>
     </Swipeable>
   )
