@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Text, View } from 'react-native';
-import { Button, Pressable, StyleSheet } from 'react-native';
+import { Button, Pressable, StyleSheet, TextInput } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Switch } from 'react-native-gesture-handler';
 import * as Notifications from 'expo-notifications';
@@ -13,6 +13,7 @@ import useAlarms from './hooks/useAlarms';
 const DetailScreen = ({navigation}) => {
   const { alarms, setAlarms } = useAlarms()
   const [isEnabled, setIsEnabled] = useState(false);
+  const [text, onChangeText] = useState('Alarm 1');
 
   let setTime = new Date();
   let currTime = new Date().getTime();
@@ -107,7 +108,15 @@ const DetailScreen = ({navigation}) => {
 
       <View style={styles.options}>
         <Pressable onPress={() => {console.log('Repeat')}} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%'}}><Text style={{position: 'relative', fontSize: 20}}>Repeat</Text><Text style={{textAlign: 'right', fontSize: 20}}>{repeat} {'>'}</Text></Pressable>
-        <Pressable onPress={() => {console.log('Label')}} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}><Text style={{position: 'relative', fontSize: 20}}>Label</Text><Text style={{textAlign: 'right', fontSize: 20}}>{label} </Text></Pressable>
+       
+       <Pressable 
+        style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}>
+          <Text style={{position: 'relative', fontSize: 20}}>Label</Text>
+          <TextInput
+          value={text}
+          style={styles.text}
+          />
+        </Pressable>
         <Pressable onPress={pickSound} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}><Text style={{position: 'relative', fontSize: 20}}>Sound</Text><Text style={{textAlign: 'right', fontSize: 20}}>{sound} {'>'} </Text></Pressable>
         <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}>
           <Text style={{position: 'relative', fontSize: 20}}>Snooze</Text>
@@ -122,22 +131,7 @@ const DetailScreen = ({navigation}) => {
       <View style={{padding: '10%'}}></View>
    </View>
   );
-    // return (
-    //     <View style={{ flex: 1, backgroundColor: 'green' }} />
-    // );
 };
-
-
-// DetailScreen.navigationOptions = ({navigation}) => ({
-//     headerRight: () => (
-//       <Button
-//         onPress={() => navigation.navigate('Home')}
-//         title="Save"
-//         color="#000"
-//       />
-//     ),
-//   }); 
-  // look into this code
  
 
 const styles = StyleSheet.create({
@@ -168,6 +162,11 @@ const styles = StyleSheet.create({
     paddingLeft: '5%',
     paddingRight: '5%',
     borderRadius: 10,
+  },
+  text: {
+    height: 20,
+    fontSize: 20,
+    marginLeft: 15,
   },
 });
 
