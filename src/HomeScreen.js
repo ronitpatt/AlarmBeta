@@ -16,9 +16,12 @@ const HomeScreen = ({route, navigation}) => {
   const { alarms, setAlarms } = useAlarms()
   const alarmTime = route.params;
   const currTime = new Date().getTime();
-  // console.log(alarmTime);
-  // console.log(currTime);
-  // console.log(alarmTime - currTime);
+  
+  // what if we call sendNotification function here instead of in DetailScreen 
+  // so when the user saves the alarm, it goes back to home screen automatically
+  // with the toggle switch flipped to "on" and then the sendNotification function is called
+  // so if the user toggles the switch off, sendNotification isn't called
+
   useEffect(() => {
     (async () => {
       const {status} = await Notifications.requestPermissionsAsync();

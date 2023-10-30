@@ -115,6 +115,7 @@ const DetailScreen = ({navigation}) => {
           <TextInput
           value={text}
           style={styles.text}
+          onChangeText={onChangeText}
           />
         </Pressable>
         <Pressable onPress={pickSound} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}><Text style={{position: 'relative', fontSize: 20}}>Sound</Text><Text style={{textAlign: 'right', fontSize: 20}}>{sound} {'>'} </Text></Pressable>
