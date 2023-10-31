@@ -8,6 +8,12 @@ import { Audio } from 'expo-av';
 
 export const soundObject = new Audio.Sound();
 
+Audio.setAudioModeAsync({
+  staysActiveInBackground: true,
+  playsInSilentModeIOS: true,
+  interruptionModeIOS: 1,
+});
+
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
