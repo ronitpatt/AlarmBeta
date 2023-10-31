@@ -4541,6 +4541,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-av@npm:~13.4.1":
+  version: 13.4.1
+  resolution: "expo-av@npm:13.4.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 5c4c62b7e4e2214f6e8bcbe6e141ff5b4b87b02e710da025856a08ba87ad9645659070e954e2926ab4bf1464483cd379d5b5dbd4413033083862bba04b6730dd
+  languageName: node
+  linkType: hard
+
 "expo-build-properties@npm:^0.8.3":
   version: 0.8.3
   resolution: "expo-build-properties@npm:0.8.3"
@@ -5237,6 +5246,7 @@ __metadata:
     "@react-navigation/native": "npm:^6.1.9"
     "@react-navigation/stack": "npm:^6.3.20"
     expo: "npm:~49.0.15"
+    expo-av: "npm:~13.4.1"
     expo-build-properties: "npm:^0.8.3"
     expo-notifications: "npm:~0.20.1"
     expo-status-bar: "npm:~1.6.0"

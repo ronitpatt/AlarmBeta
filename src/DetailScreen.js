@@ -5,6 +5,8 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { Switch } from 'react-native-gesture-handler';
 import * as Notifications from 'expo-notifications';
 import useAlarms from './hooks/useAlarms';
+import { soundObject } from './HomeScreen';
+
 
 // import EditScreenInfo from '../../components/EditScreenInfo';
 // import { SafeAreaView } from 'react-native';
@@ -14,6 +16,8 @@ const DetailScreen = ({navigation}) => {
   const { alarms, setAlarms } = useAlarms()
   const [isEnabled, setIsEnabled] = useState(false);
   const [text, onChangeText] = useState('Alarm 1');
+
+  
 
   let setTime = new Date();
   let currTime = new Date().getTime();
@@ -29,6 +33,12 @@ const DetailScreen = ({navigation}) => {
       }
     })();
   }, []);
+
+  async function loadSound() {
+    console.log("Loading sound");
+    await soundObject.loadAsync(require('./sounds/strokes.mp3'));
+    console.log('Sound loaded');
+  }
 
   const sendNotification = async () => {
     // let temp = Math.floor(setTime.getTime() / 100000) * 100000;
@@ -51,6 +61,7 @@ const DetailScreen = ({navigation}) => {
         repeats: false
       },
     });
+    loadSound();
   };
 
   const setNewTime = (DateTimePickerEvent, newTime) => {

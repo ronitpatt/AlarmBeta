@@ -4,18 +4,38 @@ import * as Notifications from 'expo-notifications';
 import { FontAwesome } from '@expo/vector-icons';
 import AlarmPanel from './components/alarmPanel';
 import useAlarms from './hooks/useAlarms';
+import { Audio } from 'expo-av';
+
+export const soundObject = new Audio.Sound();
+
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: true,
     shouldSetBadge: false,
   }),
+  handleSuccess: (notificationId) => (playSound())
 });
+
+async function stopSound() {
+  console.log('Stopping sound');
+  await soundObject.stopAsync();
+  console.log('Sound stopped');
+}
+
+async function playSound() {
+  console.log('Playing sound');
+  await soundObject.playAsync();
+  console.log('Sound played');
+}
 
 const HomeScreen = ({route, navigation}) => {
   const { alarms, setAlarms } = useAlarms()
   const alarmTime = route.params;
   const currTime = new Date().getTime();
+
+  // const [sound, setSound] = useState("");
   
   // what if we call sendNotification function here instead of in DetailScreen 
   // so when the user saves the alarm, it goes back to home screen automatically
@@ -36,7 +56,6 @@ const HomeScreen = ({route, navigation}) => {
       content: {
         title: 'Wake up!',
         body: 'You have new notifications.',
-        sound: 'sunny.wav',
       },
       trigger: {
         seconds: (route.params.alarmTime - currTime) / 1000,
@@ -47,6 +66,7 @@ const HomeScreen = ({route, navigation}) => {
   return (
     <>
     <FontAwesome style={styles.title}>Alarmify</FontAwesome>
+    <Button title="SNOOZE" onPress={() => stopSound()} />
     {alarms.map(({ index, hour, minutes, am}) => (
           <AlarmPanel key={index} hour={hour} minutes={minutes} am={am} />
     ))}
