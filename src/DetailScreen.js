@@ -13,11 +13,9 @@ import { soundObject } from './HomeScreen';
 // import { NavigationContainer } from '@react-navigation/native';
 
 const DetailScreen = ({navigation}) => {
-  const { alarms, setAlarms } = useAlarms()
+  const { alarms, setAlarms, loaded, setLoaded} = useAlarms();
   const [isEnabled, setIsEnabled] = useState(false);
   const [text, onChangeText] = useState('Alarm 1');
-
-  
 
   let setTime = new Date();
   let currTime = new Date().getTime();
@@ -37,7 +35,7 @@ const DetailScreen = ({navigation}) => {
   async function loadSound() {
     console.log("Loading sound");
     await soundObject.loadAsync(require('./sounds/strokes.mp3'));
-    console.log('Sound loaded');
+    setLoaded(true);
   }
 
   const sendNotification = async () => {
@@ -61,7 +59,10 @@ const DetailScreen = ({navigation}) => {
         repeats: false
       },
     });
-    loadSound();
+    if(!loaded)
+    {
+      loadSound();
+    }
   };
 
   const setNewTime = (DateTimePickerEvent, newTime) => {
