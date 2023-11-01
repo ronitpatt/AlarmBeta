@@ -72,7 +72,10 @@ const HomeScreen = ({route, navigation}) => {
   return (
     <>
     <FontAwesome style={styles.title}>Alarmify</FontAwesome>
-    <Button title="SNOOZE" onPress={() => stopSound()} />
+    <View>
+      <Button title="SNOOZE" onPress={() => console.log('Snooze Pressed')} />
+      <Button title='STOP' onPress={() => stopSound()} />
+    </View>
     {alarms.map(({ index, hour, minutes, am}) => (
           <AlarmPanel key={index} hour={hour} minutes={minutes} am={am} />
     ))}
