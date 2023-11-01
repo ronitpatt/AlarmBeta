@@ -102,9 +102,9 @@ const DetailScreen = ({navigation}) => {
 
   return (
     <View>
-      <View>
+      {/* <View>
         <Text style={styles.edit_alarm}>Edit Alarm</Text>
-      </View>
+      </View> */}
       
       <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between'}}>
           <Button 
@@ -145,6 +145,16 @@ const DetailScreen = ({navigation}) => {
    </View>
   );
 };
+
+// DetailScreen.navigationOptions = ({}) => ({
+//   headerRight: () => (
+//     <Button
+//       onPress={saveAlarm}
+//       title="Save"
+//       color="#000"
+//     />
+//   ),
+// });
  
 
 const styles = StyleSheet.create({
@@ -152,7 +162,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
-    paddingBottom: '5%'
+    paddingBottom: '5%',
+    paddingTop: '5%',
   },
   cancel: {
     fontSize: 20,

@@ -11,11 +11,12 @@ const SoundScreen = ({navigation}) => {
 
     return (
         <View>
-          <View>
+          {/* <View>
             <Text style={styles.sound}>Sound</Text>
-          </View>
+          </View> */}
     
         <SafeAreaView>
+          <View style={{paddingTop: 10}}></View>
           <View style={styles.buttonStyle}>
             <Button
                 onPress={() => {
@@ -65,7 +66,7 @@ const SoundScreen = ({navigation}) => {
     },
     buttonStyle: {
         margin: 5,
-        alignItems: 'left',
+        alignItems: 'left', 
     },
     separator: {
         marginVertical: 8,
