@@ -120,10 +120,14 @@ const DetailScreen = ({navigation}) => {
       <DateTimePicker style={{paddingBottom: '5%'}} mode='time' display='spinner' value={setTime} onChange={setNewTime} />
 
       <View style={styles.options}>
-        <Pressable onPress={() => {console.log('Repeat')}} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%'}}><Text style={{position: 'relative', fontSize: 20}}>Repeat</Text><Text style={{textAlign: 'right', fontSize: 20}}>{repeat} {'>'}</Text></Pressable>
+        <Pressable onPress={() => {console.log('Repeat')}} 
+        style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%'}}>
+          <Text style={{position: 'relative', fontSize: 20}}>Repeat</Text>
+          <Text style={{textAlign: 'right', fontSize: 20}}>{repeat} {'>'}</Text>
+        </Pressable>
        
        <Pressable 
-        style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}>
+        style={styles.optionContainer}>
           <Text style={{position: 'relative', fontSize: 20}}>Label</Text>
           <TextInput
           value={text}
@@ -131,8 +135,14 @@ const DetailScreen = ({navigation}) => {
           onChangeText={onChangeText}
           />
         </Pressable>
-        <Pressable onPress={pickSound} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}><Text style={{position: 'relative', fontSize: 20}}>Sound</Text><Text style={{textAlign: 'right', fontSize: 20}}>{sound} {'>'} </Text></Pressable>
-        <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}>
+        
+        <Pressable onPress={pickSound} 
+          style={styles.optionContainer}>
+          <Text style={{position: 'relative', fontSize: 20}}>Sound</Text>
+          <Text style={{textAlign: 'right', fontSize: 20}}>{sound} {'>'} </Text>
+        </Pressable>
+        
+        <View style={styles.optionContainer}>
           <Text style={{position: 'relative', fontSize: 20}}>Snooze</Text>
           <Switch 
             trackColor={{false: '#767577', true: '#1ED760'}}
@@ -180,18 +190,30 @@ const styles = StyleSheet.create({
   options: {
     borderStyle: 'solid',
     borderWidth: 1,
-    borderBottomColor: 'black',
-    borderLeftColor: 'black',
-    borderTopColor: 'black',
+    borderBottomColor: '#e0e0e0',
+    borderLeftColor: '#e0e0e0',
+    borderRightColor: '#e0e0e0',
+    borderTopColor: '#e0e0e0',
+    backgroundColor: '#e0e0e0',
+    borderRadius: 15,
     paddingTop: '5%',
     paddingLeft: '5%',
     paddingRight: '5%',
-    borderRadius: 10,
+    margin: '2%',
   },
   text: {
     height: 20,
     fontSize: 20,
     marginLeft: 15,
+  },
+  optionContainer: {
+    display: 'flex', 
+    flexDirection:'row', 
+    justifyContent: 'space-between', 
+    paddingBottom: '5%', 
+    paddingTop: '5%', 
+    borderTopColor: 'black', 
+    borderTopWidth: 1,
   },
 });
 

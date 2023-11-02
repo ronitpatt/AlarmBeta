@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 8,
-    backgroundColor: 'lightgreen'
+    backgroundColor: '#e0e0e0',
   },
   timeDigits: {
     fontSize: 50,

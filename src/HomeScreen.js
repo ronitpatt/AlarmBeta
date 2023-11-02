@@ -72,12 +72,12 @@ const HomeScreen = ({route, navigation}) => {
   return (
     <>
     <FontAwesome style={styles.title}>Alarmify</FontAwesome>
-    <View>
+    <View style={styles.buttonContainer}>
       <Button title="SNOOZE" onPress={() => console.log('Snooze Pressed')} />
       <Button title='STOP' onPress={() => stopSound()} />
     </View>
     {alarms.map(({ index, hour, minutes, am}) => (
-          <AlarmPanel key={index} hour={hour} minutes={minutes} am={am} />
+          <AlarmPanel key={index} hour={hour} minutes={minutes} am={am} />    
     ))}
     </>
   );
@@ -96,13 +96,17 @@ HomeScreen.navigationOptions = ({navigation}) => ({
 const styles = StyleSheet.create({
   title: {
     fontSize: 50,
-    fontWeight: 'bold',
     alignSelf: 'flex-start',
-    color: 'lightgreen',
+    color: '#1ED760',
     marginTop: 15,
     margin: 10,
   },
-  
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
 });
 
 export default HomeScreen;
