@@ -21,11 +21,12 @@ const renderRightActions = (progress, dragX, onDelete) => {
   );
 };
 
-export default function AlarmPanel({ hour, minutes, am, onDelete }) { // add index here 
+export default function AlarmPanel({ id, hour, minutes, am, handleDelete, notificationId}) { // add index here 
   const [isEnabled, setIsEnabled] = useState(true);
   
   onDelete = () => {
     console.log("Delete function called.");
+    handleDelete(id, notificationId);
   };
 
   const toggleSwitch = () => {
@@ -60,8 +61,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8,
     backgroundColor: '#e0e0e0',
-    borderBottom: 'gray',
-    borderBottomWidth: 0.5,
   },
   timeDigits: {
     fontSize: 50,
