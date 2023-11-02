@@ -22,6 +22,23 @@ const HomeScreen = ({route, navigation}) => {
   // with the toggle switch flipped to "on" and then the sendNotification function is called
   // so if the user toggles the switch off, sendNotification isn't called
 
+  // additional function to handle deletion
+  const deleteAlarm = (id, notificationId) => {
+    Notifications.cancelScheduledNotificationAsync(notificationId);
+    console.log('pre delete size below');
+    console.log(alarms.length);
+    console.log(alarms);
+    let updatedAlarms = alarms.filter((_, index) => index !== id);
+    console.log(id);
+    if(id == 1){
+      console.log('FLAG');
+    }
+    console.log(alarms.length);
+    console.log('deleting size below');
+    console.log(updatedAlarms.length);
+    setAlarms(updatedAlarms);
+  };
+
   useEffect(() => {
     (async () => {
       const {status} = await Notifications.requestPermissionsAsync();
@@ -29,26 +46,26 @@ const HomeScreen = ({route, navigation}) => {
         alert('No notification permissions!');
       }
     })();
-  }, []);
+  }, [alarms]);
 
-  const sendNotification = async () => {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Wake up!',
-        body: 'You have new notifications.',
-        sound: 'sunny.wav',
-      },
-      trigger: {
-        seconds: (route.params.alarmTime - currTime) / 1000,
-      },
-    });
-  };
+  // const sendNotification = async () => {
+  //   await Notifications.scheduleNotificationAsync({
+  //     content: {
+  //       title: 'Wake up!',
+  //       body: 'You have new notifications.',
+  //       sound: 'sunny.wav',
+  //     },
+  //     trigger: {
+  //       seconds: (route.params.alarmTime - currTime) / 1000,
+  //     },
+  //   });
+  // };
 
   return (
     <>
     <FontAwesome style={styles.title}>Alarmify</FontAwesome>
-    {alarms.map(({ index, hour, minutes, am}) => (
-          <AlarmPanel key={index} hour={hour} minutes={minutes} am={am} />
+    {alarms.map(({ index, hour, minutes, am, notificationId}) => (
+          <AlarmPanel key={index} id={index} hour={hour} minutes={minutes} am={am} handleDelete={deleteAlarm} notificationId={notificationId}/>
     ))}
     </>
   );

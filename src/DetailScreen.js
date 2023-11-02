@@ -9,6 +9,7 @@ import useAlarms from './hooks/useAlarms';
 // import EditScreenInfo from '../../components/EditScreenInfo';
 // import { SafeAreaView } from 'react-native';
 // import { NavigationContainer } from '@react-navigation/native';
+let unique_id = 0;
 
 const DetailScreen = ({navigation}) => {
   const { alarms, setAlarms } = useAlarms()
@@ -37,20 +38,35 @@ const DetailScreen = ({navigation}) => {
     const triggerTime = setTime;
     // triggerTime.setHours(7); // set the hour for the notification
     // triggerTime.setMinutes(30); // set the minute for the notification
-    await Notifications.scheduleNotificationAsync({
+
+    const schedulingOptions = {
       content: {
         title: 'Wake up!',
         body: 'You have new notifications.',
       },
-    //   trigger: {
-    //     seconds: ((temp - currTime) / 1000) - seconds_minus,
-    //   },
       trigger: {
         hour: triggerTime.getHours(),
         minute: triggerTime.getMinutes(),
         repeats: false
       },
-    });
+    };
+    // await Notifications.scheduleNotificationAsync({
+    //   content: {
+    //     title: 'Wake up!',
+    //     body: 'You have new notifications.',
+    //   },
+    // //   trigger: {
+    // //     seconds: ((temp - currTime) / 1000) - seconds_minus,
+    // //   },
+    //   trigger: {
+    //     hour: triggerTime.getHours(),
+    //     minute: triggerTime.getMinutes(),
+    //     repeats: false
+    //   },
+    // });
+
+    const notificationId = await Notifications.scheduleNotificationAsync(schedulingOptions);
+    return notificationId;
   };
 
   const setNewTime = (DateTimePickerEvent, newTime) => {
@@ -60,10 +76,11 @@ const DetailScreen = ({navigation}) => {
     let temp = Math.floor(setTime.getTime() / 1000) * 1000;
   };
 
-  const saveAlarm = () => {
+  const saveAlarm = async () => {
     console.log("currTime when you save alarm");
     console.log(currTime);
-    sendNotification();
+    // sendNotification();
+    const notificationId = await sendNotification();
     let am = false;
     if(setTime.getHours() < 12)
     {
@@ -71,7 +88,11 @@ const DetailScreen = ({navigation}) => {
     }
     let hours = (setTime.getHours() + 24) % 12 || 12;
     const trimmedDate = setTime.toISOString().substring(0, 16); // "2023-10-30T17:02"
-    setAlarms(prev => [...prev, { index: trimmedDate, hour: hours, minutes: setTime.getMinutes(), am: am}])
+    console.log("unique ID");
+    console.log(unique_id);
+    setAlarms(prev => [...prev, { index: unique_id, hour: hours, minutes: setTime.getMinutes(), am: am, notificationId: notificationId}])
+    unique_id++;
+    
     navigation.navigate('Home', {
         alarmTime: setTime.getTime()
     });
