@@ -5,6 +5,8 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { Switch } from 'react-native-gesture-handler';
 import * as Notifications from 'expo-notifications';
 import useAlarms from './hooks/useAlarms';
+import { soundObject } from './HomeScreen';
+
 
 // import EditScreenInfo from '../../components/EditScreenInfo';
 // import { SafeAreaView } from 'react-native';
@@ -12,7 +14,7 @@ import useAlarms from './hooks/useAlarms';
 let unique_id = 0;
 
 const DetailScreen = ({navigation}) => {
-  const { alarms, setAlarms } = useAlarms()
+  const { alarms, setAlarms, loaded, setLoaded} = useAlarms();
   const [isEnabled, setIsEnabled] = useState(false);
   const [text, onChangeText] = useState('Alarm 1');
 
@@ -30,6 +32,12 @@ const DetailScreen = ({navigation}) => {
       }
     })();
   }, []);
+
+  async function loadSound() {
+    console.log("Loading sound");
+    await soundObject.loadAsync(require('./sounds/strokes.mp3'));
+    setLoaded(true);
+  }
 
   const sendNotification = async () => {
     // let temp = Math.floor(setTime.getTime() / 100000) * 100000;
@@ -64,9 +72,13 @@ const DetailScreen = ({navigation}) => {
     //     repeats: false
     //   },
     // });
-
+    if(!loaded)
+    {
+      loadSound();
+    }
     const notificationId = await Notifications.scheduleNotificationAsync(schedulingOptions);
     return notificationId;
+    
   };
 
   const setNewTime = (DateTimePickerEvent, newTime) => {
@@ -112,9 +124,9 @@ const DetailScreen = ({navigation}) => {
 
   return (
     <View>
-      <View>
+      {/* <View>
         <Text style={styles.edit_alarm}>Edit Alarm</Text>
-      </View>
+      </View> */}
       
       <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between'}}>
           <Button 
@@ -129,10 +141,14 @@ const DetailScreen = ({navigation}) => {
       <DateTimePicker style={{paddingBottom: '5%'}} mode='time' display='spinner' value={setTime} onChange={setNewTime} />
 
       <View style={styles.options}>
-        <Pressable onPress={() => {console.log('Repeat')}} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%'}}><Text style={{position: 'relative', fontSize: 20}}>Repeat</Text><Text style={{textAlign: 'right', fontSize: 20}}>{repeat} {'>'}</Text></Pressable>
+        <Pressable onPress={() => {console.log('Repeat')}} 
+        style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%'}}>
+          <Text style={{position: 'relative', fontSize: 20}}>Repeat</Text>
+          <Text style={{textAlign: 'right', fontSize: 20}}>{repeat} {'>'}</Text>
+        </Pressable>
        
        <Pressable 
-        style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}>
+        style={styles.optionContainer}>
           <Text style={{position: 'relative', fontSize: 20}}>Label</Text>
           <TextInput
           value={text}
@@ -140,8 +156,14 @@ const DetailScreen = ({navigation}) => {
           onChangeText={onChangeText}
           />
         </Pressable>
-        <Pressable onPress={pickSound} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}><Text style={{position: 'relative', fontSize: 20}}>Sound</Text><Text style={{textAlign: 'right', fontSize: 20}}>{sound} {'>'} </Text></Pressable>
-        <View style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%', paddingTop: '5%', borderTopColor: 'black', borderTopWidth: 1}}>
+        
+        <Pressable onPress={pickSound} 
+          style={styles.optionContainer}>
+          <Text style={{position: 'relative', fontSize: 20}}>Sound</Text>
+          <Text style={{textAlign: 'right', fontSize: 20}}>{sound} {'>'} </Text>
+        </Pressable>
+        
+        <View style={styles.optionContainer}>
           <Text style={{position: 'relative', fontSize: 20}}>Snooze</Text>
           <Switch 
             trackColor={{false: '#767577', true: '#1ED760'}}
@@ -155,6 +177,16 @@ const DetailScreen = ({navigation}) => {
    </View>
   );
 };
+
+// DetailScreen.navigationOptions = ({}) => ({
+//   headerRight: () => (
+//     <Button
+//       onPress={saveAlarm}
+//       title="Save"
+//       color="#000"
+//     />
+//   ),
+// });
  
 
 const styles = StyleSheet.create({
@@ -162,7 +194,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
-    paddingBottom: '5%'
+    paddingBottom: '5%',
+    paddingTop: '5%',
   },
   cancel: {
     fontSize: 20,
@@ -178,18 +211,30 @@ const styles = StyleSheet.create({
   options: {
     borderStyle: 'solid',
     borderWidth: 1,
-    borderBottomColor: 'black',
-    borderLeftColor: 'black',
-    borderTopColor: 'black',
+    borderBottomColor: '#e0e0e0',
+    borderLeftColor: '#e0e0e0',
+    borderRightColor: '#e0e0e0',
+    borderTopColor: '#e0e0e0',
+    backgroundColor: '#e0e0e0',
+    borderRadius: 15,
     paddingTop: '5%',
     paddingLeft: '5%',
     paddingRight: '5%',
-    borderRadius: 10,
+    margin: '2%',
   },
   text: {
     height: 20,
     fontSize: 20,
     marginLeft: 15,
+  },
+  optionContainer: {
+    display: 'flex', 
+    flexDirection:'row', 
+    justifyContent: 'space-between', 
+    paddingBottom: '5%', 
+    paddingTop: '5%', 
+    borderTopColor: 'black', 
+    borderTopWidth: 1,
   },
 });
 

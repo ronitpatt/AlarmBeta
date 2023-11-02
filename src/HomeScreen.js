@@ -4,18 +4,44 @@ import * as Notifications from 'expo-notifications';
 import { FontAwesome } from '@expo/vector-icons';
 import AlarmPanel from './components/alarmPanel';
 import useAlarms from './hooks/useAlarms';
+import { Audio } from 'expo-av';
+
+export const soundObject = new Audio.Sound();
+
+Audio.setAudioModeAsync({
+  staysActiveInBackground: true,
+  playsInSilentModeIOS: true,
+  interruptionModeIOS: 1,
+});
+
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: true,
     shouldSetBadge: false,
   }),
+  handleSuccess: (notificationId) => (playSound())
 });
+
+async function stopSound() {
+  console.log('Stopping sound');
+  await soundObject.stopAsync();
+  console.log('Sound stopped');
+}
+
+async function playSound() {
+  console.log('Playing sound');
+  await soundObject.playAsync();
+  console.log('Sound played');
+}
 
 const HomeScreen = ({route, navigation}) => {
   const { alarms, setAlarms } = useAlarms()
   const alarmTime = route.params;
   const currTime = new Date().getTime();
+
+  // const [sound, setSound] = useState("");
   
   // what if we call sendNotification function here instead of in DetailScreen 
   // so when the user saves the alarm, it goes back to home screen automatically
@@ -25,17 +51,13 @@ const HomeScreen = ({route, navigation}) => {
   // additional function to handle deletion
   const deleteAlarm = (id, notificationId) => {
     Notifications.cancelScheduledNotificationAsync(notificationId);
-    console.log('pre delete size below');
-    console.log(alarms.length);
+    console.log('pre delete index below');
     console.log(alarms);
     let updatedAlarms = alarms.filter((_, index) => index !== id);
     console.log(id);
     if(id == 1){
       console.log('FLAG');
     }
-    console.log(alarms.length);
-    console.log('deleting size below');
-    console.log(updatedAlarms.length);
     setAlarms(updatedAlarms);
   };
 
@@ -64,8 +86,12 @@ const HomeScreen = ({route, navigation}) => {
   return (
     <>
     <FontAwesome style={styles.title}>Alarmify</FontAwesome>
+    <View style={styles.buttonContainer}>
+      <Button title="SNOOZE" onPress={() => console.log('Snooze Pressed')} />
+      <Button title='STOP' onPress={() => stopSound()} />
+    </View>
     {alarms.map(({ index, hour, minutes, am, notificationId}) => (
-          <AlarmPanel key={index} id={index} hour={hour} minutes={minutes} am={am} handleDelete={deleteAlarm} notificationId={notificationId}/>
+          <AlarmPanel key={index} id={index} hour={hour} minutes={minutes} am={am} handleDelete={deleteAlarm} notificationId={notificationId}/>    
     ))}
     </>
   );
@@ -84,13 +110,17 @@ HomeScreen.navigationOptions = ({navigation}) => ({
 const styles = StyleSheet.create({
   title: {
     fontSize: 50,
-    fontWeight: 'bold',
     alignSelf: 'flex-start',
-    color: 'lightgreen',
+    color: '#1ED760',
     marginTop: 15,
     margin: 10,
   },
-  
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
 });
 
 export default HomeScreen;
