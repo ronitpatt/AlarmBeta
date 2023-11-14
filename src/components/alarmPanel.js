@@ -21,7 +21,7 @@ const renderRightActions = (progress, dragX, onDelete) => {
   );
 };
 
-export default function AlarmPanel({ id, hour, minutes, am, handleDelete, notificationId}) { // add index here 
+export default function AlarmPanel({ id, hour, minutes, am, handleDelete, notificationId, alarmName}) { // add index here 
   const [isEnabled, setIsEnabled] = useState(true);
   
   onDelete = () => {
@@ -38,16 +38,27 @@ export default function AlarmPanel({ id, hour, minutes, am, handleDelete, notifi
       renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, onDelete)}
     >
     <View style={styles.panelContainer}> 
-    <FontAwesome style={styles.timeDigits}>
-    {hour}:{minutes < 10 ? "0" + minutes : minutes}<FontAwesome style={styles.timeOfDay}>
-      {am ? "AM" : "PM"}</FontAwesome>
-    </FontAwesome>
-    <Switch 
-        trackColor={{false: '#767577', true: '#1ED760'}}
-        thumbColor={isEnabled ? '#FFFFFF' : '#f4f3f4'}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleSwitch}
-        value={isEnabled}/>
+        <View style={styles.panel}>
+          <FontAwesome style={styles.timeDigits}>
+            {hour}:{minutes < 10 ? "0" + minutes : minutes}
+            <FontAwesome style={styles.timeOfDay}>
+              {am ? "AM" : "PM"}
+            </FontAwesome>
+          </FontAwesome>
+
+          <FontAwesome style={styles.name}>
+          {alarmName}</FontAwesome>
+
+        </View>
+        <View>
+          <Switch 
+            trackColor={{false: '#767577', true: '#1ED760'}}
+            thumbColor={isEnabled ? '#FFFFFF' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </View>
     </View>
     </Swipeable>
   )
@@ -59,15 +70,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 8,
+    padding: 5,
     backgroundColor: '#e0e0e0',
   },
   timeDigits: {
     fontSize: 50,
     fontWeight: 'bold',
     alignSelf: 'flex-start',
-    marginTop: 15,
-    margin: 10,
+    margin: 5,
   },
   timeOfDay: {
     fontSize: 20
@@ -83,5 +93,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '700',
   },
+  name: {
+    marginLeft: 5,
+    fontSize: 15,
+  }
   
 });

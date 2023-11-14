@@ -102,7 +102,7 @@ const DetailScreen = ({navigation}) => {
     const trimmedDate = setTime.toISOString().substring(0, 16); // "2023-10-30T17:02"
     console.log("unique ID");
     console.log(unique_id);
-    setAlarms(prev => [...prev, { index: unique_id, hour: hours, minutes: setTime.getMinutes(), am: am, notificationId: notificationId}])
+    setAlarms(prev => [...prev, { index: unique_id, hour: hours, minutes: setTime.getMinutes(), am: am, notificationId: notificationId, alarmName: text}])
     unique_id++;
     
     navigation.navigate('Home', {
