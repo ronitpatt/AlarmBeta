@@ -122,6 +122,10 @@ const DetailScreen = ({navigation}) => {
     setIsEnabled(previousState => !previousState);
   }
 
+  const pickRepeat = () => {
+    navigation.navigate('Repeat');
+  }
+
   return (
     <View>
       {/* <View>
@@ -141,10 +145,11 @@ const DetailScreen = ({navigation}) => {
       <DateTimePicker style={{paddingBottom: '5%'}} mode='time' display='spinner' value={setTime} onChange={setNewTime} />
 
       <View style={styles.options}>
-        <Pressable onPress={() => {console.log('Repeat')}} 
-        style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%'}}>
-          <Text style={{position: 'relative', fontSize: 20}}>Repeat</Text>
-          <Text style={{textAlign: 'right', fontSize: 20}}>{repeat} {'>'}</Text>
+        
+        <Pressable onPress={pickRepeat}
+          style={styles.optionContainer}>
+              <Text style={{position: 'relative', fontSize: 20}}>Repeat</Text>
+              <Text style={{textAlign: 'right', fontSize: 20}}>{repeat} {'>'}</Text>
         </Pressable>
        
        <Pressable 
