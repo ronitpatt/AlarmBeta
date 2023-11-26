@@ -4,7 +4,7 @@
 node_modules/
 
 # secret
-src/secret.js
+# src/secret.js
 
 # Expo
 .expo/
