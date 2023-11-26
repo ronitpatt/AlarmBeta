@@ -5,6 +5,9 @@ import HomeScreen from './src/HomeScreen';
 import DetailScreen from './src/DetailScreen';
 import { AlarmProvider } from './src/contexts/alarmContext';
 import SoundScreen from './src/SoundScreen';
+import PlaylistScreen from './src/PlaylistScreen';
+import SongScreen from './src/SongScreen';
+
 
 const Stack = createStackNavigator();
 // import { Platform } from 'react-native'
@@ -52,6 +55,8 @@ export default function App() {
         />
         <Stack.Screen name="Details" component={DetailScreen} />
         <Stack.Screen name="Sound" component={SoundScreen} />
+        <Stack.Screen name="Playlists" component={PlaylistScreen} />
+        <Stack.Screen name="Songs" component={SongScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </AlarmProvider>

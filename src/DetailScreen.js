@@ -35,7 +35,7 @@ const DetailScreen = ({navigation}) => {
 
   async function loadSound() {
     console.log("Loading sound");
-    await soundObject.loadAsync(require('./sounds/strokes.mp3'));
+    await soundObject.loadAsync(require('./sounds/tyler.mp3'));
     setLoaded(true);
   }
 
@@ -77,6 +77,7 @@ const DetailScreen = ({navigation}) => {
       loadSound();
     }
     const notificationId = await Notifications.scheduleNotificationAsync(schedulingOptions);
+    
     return notificationId;
     
   };
@@ -93,6 +94,7 @@ const DetailScreen = ({navigation}) => {
     console.log(currTime);
     // sendNotification();
     const notificationId = await sendNotification();
+    
     let am = false;
     if(setTime.getHours() < 12)
     {
