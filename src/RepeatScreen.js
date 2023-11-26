@@ -21,7 +21,7 @@ const RepeatScreen = ({navigation}) => {
 
             {daysOfWeek.map(day => {
                 return (
-                <Pressable onPress={setRepeat} style={styles.optionContainer}>
+                <Pressable key={day} onPress={setRepeat} style={styles.optionContainer}>
                         <Text style={{position: 'relative', fontSize: 20}}>Every {day}</Text>
                         {dayRepeat ? <Text style={{fontSize:20, paddingRight: 5}}>✓</Text> : null}
                 </Pressable>
