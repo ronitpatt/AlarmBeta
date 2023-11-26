@@ -104,7 +104,7 @@ const DetailScreen = ({navigation}) => {
     const trimmedDate = setTime.toISOString().substring(0, 16); // "2023-10-30T17:02"
     console.log("unique ID");
     console.log(unique_id);
-    setAlarms(prev => [...prev, { index: unique_id, hour: hours, minutes: setTime.getMinutes(), am: am, notificationId: notificationId}])
+    setAlarms(prev => [...prev, { index: unique_id, hour: hours, minutes: setTime.getMinutes(), am: am, notificationId: notificationId, alarmName: text}])
     unique_id++;
     
     navigation.navigate('Home', {
@@ -122,6 +122,10 @@ const DetailScreen = ({navigation}) => {
 
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
+  }
+
+  const pickRepeat = () => {
+    navigation.navigate('Repeat');
   }
 
   return (
@@ -143,10 +147,11 @@ const DetailScreen = ({navigation}) => {
       <DateTimePicker style={{paddingBottom: '5%'}} mode='time' display='spinner' value={setTime} onChange={setNewTime} />
 
       <View style={styles.options}>
-        <Pressable onPress={() => {console.log('Repeat')}} 
-        style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between', paddingBottom: '5%'}}>
-          <Text style={{position: 'relative', fontSize: 20}}>Repeat</Text>
-          <Text style={{textAlign: 'right', fontSize: 20}}>{repeat} {'>'}</Text>
+        
+        <Pressable onPress={pickRepeat}
+          style={styles.optionContainer}>
+              <Text style={{position: 'relative', fontSize: 20}}>Repeat</Text>
+              <Text style={{textAlign: 'right', fontSize: 20}}>{repeat} {'>'}</Text>
         </Pressable>
        
        <Pressable 

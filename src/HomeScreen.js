@@ -90,8 +90,8 @@ const HomeScreen = ({route, navigation}) => {
       <Button title="SNOOZE" onPress={() => console.log('Snooze Pressed')} />
       <Button title='STOP' onPress={() => stopSound()} />
     </View>
-    {alarms.map(({ index, hour, minutes, am, notificationId}) => (
-          <AlarmPanel key={index} id={index} hour={hour} minutes={minutes} am={am} handleDelete={deleteAlarm} notificationId={notificationId}/>    
+    {alarms.map(({ index, hour, minutes, am, notificationId, alarmName}) => (
+          <AlarmPanel key={index} id={index} hour={hour} minutes={minutes} am={am} handleDelete={deleteAlarm} notificationId={notificationId} alarmName={alarmName}/>    
     ))}
     </>
   );

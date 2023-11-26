@@ -5,6 +5,7 @@ import HomeScreen from './src/HomeScreen';
 import DetailScreen from './src/DetailScreen';
 import { AlarmProvider } from './src/contexts/alarmContext';
 import SoundScreen from './src/SoundScreen';
+import RepeatScreen from './src/RepeatScreen';
 import PlaylistScreen from './src/PlaylistScreen';
 import SongScreen from './src/SongScreen';
 
@@ -57,6 +58,7 @@ export default function App() {
         <Stack.Screen name="Sound" component={SoundScreen} />
         <Stack.Screen name="Playlists" component={PlaylistScreen} />
         <Stack.Screen name="Songs" component={SongScreen} />
+        <Stack.Screen name="Repeat" component={RepeatScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </AlarmProvider>
