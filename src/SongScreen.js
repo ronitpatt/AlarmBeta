@@ -8,10 +8,9 @@ const SongScreen = ({route, navigation}) => {
     <ScrollView>
     <View>
         {songArr.map(song => (
-          <View style={styles.songPanel}>
+          <View style={styles.songPanel} key={song.name}>
             <Button
-            key={song.name}
-            title = {song.name} />
+            title = {song.name.length >= 25 ? song.name.slice(0,25)+'...' : song.name} />
             <Image style={styles.pic} source={{ 
               uri: song.img[0].url, 
             }} />
