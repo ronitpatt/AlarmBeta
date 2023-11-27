@@ -24,7 +24,9 @@ const SoundScreen = ({navigation}) => {
   }
 
   const showRecs = (recArr) => {
-    navigation.navigate('Songs', recArr);
+    navigation.navigate('Songs', {
+      songsArr: recArr,
+      accessToken: accessToken});
   }
 
   const redirectUri = AuthSession.makeRedirectUri({
@@ -190,7 +192,7 @@ const SoundScreen = ({navigation}) => {
         let recObj = {
           name: rec.name,
           img: rec.album.images,
-          uri: rec.uri,
+          href: rec.uri,
         }
         recArr.push(recObj)
       })

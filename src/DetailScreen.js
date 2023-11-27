@@ -28,7 +28,13 @@ const DetailScreen = ({route, navigation}) => {
   const label = 'Alarm 1';
   let sound = '';
   if (route.params != undefined) {
-    sound = route.params.name;
+    if(route.params.name.length >= 20)
+    {
+      sound = route.params.name.slice(0,20) + '...';
+    }
+    else {
+      sound = route.params.name;
+    }
   }
 
   useEffect(() => {
@@ -180,7 +186,7 @@ const DetailScreen = ({route, navigation}) => {
         <Pressable onPress={pickSound} 
           style={styles.optionContainer}>
           <Text style={{position: 'relative', fontSize: 20}}>Sound</Text>
-          <Text style={{textAlign: 'right', fontSize: 17}}>{sound} {'>'} </Text>
+          <Text style={{textAlign: 'right', fontSize: 20}}>{sound} {'>'} </Text>
         </Pressable>
         
         <View style={styles.optionContainer}>
