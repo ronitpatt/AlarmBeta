@@ -25,7 +25,7 @@ Notifications.setNotificationHandler({
     shouldPlaySound: true,
     shouldSetBadge: false,
   }),
-  // handleSuccess: async (notificationId) => (playSound())
+  handleSuccess: async (notificationId) => (playSound())
 });
 
 const BACKGROUND_NOTIFICATION_TASK = 'BACKGROUND-NOTIFICATION-TASK';

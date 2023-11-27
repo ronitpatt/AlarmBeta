@@ -4838,14 +4838,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-task-manager@npm:11.5.0":
-  version: 11.5.0
-  resolution: "expo-task-manager@npm:11.5.0"
+"expo-task-manager@npm:~11.3.0":
+  version: 11.3.0
+  resolution: "expo-task-manager@npm:11.3.0"
   dependencies:
-    unimodules-app-loader: "npm:~4.3.0"
+    unimodules-app-loader: "npm:~4.2.0"
   peerDependencies:
     expo: "*"
-  checksum: f6b06721b13a235099a89d05d7727aa1113a444302492b6ecf50ad58ff26664793cb0031bbb2e6872d76a26437e7212e6b0ec29147966d641c3fc43b254549ff
+  checksum: 79e7d5b9b761f965abde58f078421af4f8a9b61b599374080d2842ade80cd4465a885b11cb8357dc775ccc9b477aca4aa1185b03208fcb07f45f229e04c06cc0
   languageName: node
   linkType: hard
 
@@ -5558,7 +5558,7 @@ __metadata:
     expo-build-properties: "npm:^0.8.3"
     expo-notifications: "npm:~0.20.1"
     expo-status-bar: "npm:~1.6.0"
-    expo-task-manager: "npm:11.5.0"
+    expo-task-manager: "npm:~11.3.0"
     express: "npm:^4.18.2"
     ios: "npm:^0.0.1"
     react: "npm:18.2.0"
@@ -9944,10 +9944,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unimodules-app-loader@npm:~4.3.0":
-  version: 4.3.0
-  resolution: "unimodules-app-loader@npm:4.3.0"
-  checksum: be0b3211dc56567034727d37af3c3188ad8c29031992e2294fb64ddf1f14f464fb7bdb0c65a48ab5c3bffd12bc896ed24653bafac183f2b0c800b81092137eb8
+"unimodules-app-loader@npm:~4.2.0":
+  version: 4.2.0
+  resolution: "unimodules-app-loader@npm:4.2.0"
+  checksum: e0ead4ab3a2601259f03d0132e2da3c08bfdc5ecb9a9f5ee8eb07fff6ef2f3e928c2e2e520c502964c9f07ba8129e2803ec7039ea1c779de6d92157c91dc59b8
   languageName: node
   linkType: hard
 
