@@ -7,10 +7,12 @@ import * as Notifications from 'expo-notifications';
 import useAlarms from './hooks/useAlarms';
 
 const RepeatScreen = ({navigation}) => {
-    const [dayRepeat, setDayRepeat] = useState(false);
+    const [dayRepeat, setDayRepeat] = useState({ Sunday: false, Monday: false, Tuesday: false, Wednesday: false, Thursday: false, Friday: false, Saturday: false});
 
-    const setRepeat = () => {
-        setDayRepeat(prevState => !prevState);
+    const setRepeat = (day) => {
+        const obj = { ...dayRepeat};
+        obj[day] = !dayRepeat[day];
+        setDayRepeat(obj);
     }
 
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -21,9 +23,9 @@ const RepeatScreen = ({navigation}) => {
 
             {daysOfWeek.map(day => {
                 return (
-                <Pressable key={day} onPress={setRepeat} style={styles.optionContainer}>
+                <Pressable key={day} onPress={() => setRepeat(day)} style={styles.optionContainer}>
                         <Text style={{position: 'relative', fontSize: 20}}>Every {day}</Text>
-                        {dayRepeat ? <Text style={{fontSize:20, paddingRight: 5}}>✓</Text> : null}
+                        {dayRepeat[day] ? <Text style={{fontSize:20, paddingRight: 5}}>✓</Text> : null}
                 </Pressable>
                 )
             })}
