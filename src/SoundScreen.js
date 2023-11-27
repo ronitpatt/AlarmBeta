@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { Text, View } from 'react-native';
 import { Button, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native';
@@ -155,6 +155,7 @@ const SoundScreen = ({navigation}) => {
         let playlistObj = {
           name: playlist.name,
           tracks: playlist.tracks.href,
+          img: playlist.images,
         }
         let num = playlistArr.push(playlistObj)
       });
