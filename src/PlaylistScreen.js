@@ -44,7 +44,7 @@ const PlaylistScreen = ({route, navigation}) => {
             <Button 
             onPress={() => {
                 getTracks(playlist.tracks, accessToken).then((songsArr) => {
-                    navigation.navigate("Songs", songsArr);
+                    navigation.navigate("Songs", {songsArr: songsArr, accessToken: accessToken});
                 }).catch((error) => {
                     console.error(error);
                   });

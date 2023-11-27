@@ -5,8 +5,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import AlarmPanel from './components/alarmPanel';
 import useAlarms from './hooks/useAlarms';
 import { Audio } from 'expo-av';
+import * as TaskManager from 'expo-task-manager';
 
 export const soundObject = new Audio.Sound();
+
+let songArr = [];
+let accessToken = '';
 
 Audio.setAudioModeAsync({
   staysActiveInBackground: true,
@@ -21,24 +25,68 @@ Notifications.setNotificationHandler({
     shouldPlaySound: true,
     shouldSetBadge: false,
   }),
-  handleSuccess: (notificationId) => (playSound())
+  // handleSuccess: async (notificationId) => (playSound())
 });
+
+const BACKGROUND_NOTIFICATION_TASK = 'BACKGROUND-NOTIFICATION-TASK';
+
+TaskManager.defineTask(BACKGROUND_NOTIFICATION_TASK, ({ data, error, executionInfo }) => {
+  console.log('Received a notification in the background!');
+  console.log(data);
+  console.log(error);
+  console.log(executionInfo);
+  // Do something with the notification data
+});
+
+Notifications.registerTaskAsync(BACKGROUND_NOTIFICATION_TASK);
 
 async function stopSound() {
   console.log('Stopping sound');
-  await soundObject.stopAsync();
-  console.log('Sound stopped');
+  try {
+    const response = await fetch("https://api.spotify.com/v1/me/player/pause", {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const responseJSON = await response.json();
+    console.log(responseJSON);
+  }
+  catch(error) {
+    console.error(error)
+  }
 }
 
 async function playSound() {
   console.log('Playing sound');
-  await soundObject.playAsync();
-  console.log('Sound played');
-}
+  console.log(songArr);
+    try {
+      const response = await fetch("https://api.spotify.com/v1/me/player/play", {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "uris": songArr
+        })
+      });
+      const responseJSON = await response.json();
+      console.log(responseJSON);
+      songArr = [];
+    }
+    catch(error) {
+      console.error(error)
+    }
+};
 
 const HomeScreen = ({route, navigation}) => {
   const { alarms, setAlarms } = useAlarms()
-  const alarmTime = route.params;
+  // const alarmTime = route.params.alarmTime;
+  if (route.params != undefined) {
+    accessToken = route.params.accessToken;
+    let num = songArr.push(route.params.song)
+  }
   const currTime = new Date().getTime();
 
   // const [sound, setSound] = useState("");
@@ -68,6 +116,11 @@ const HomeScreen = ({route, navigation}) => {
         alert('No notification permissions!');
       }
     })();
+    const subscription = Notifications.addNotificationReceivedListener(notification => {
+      console.log(notification);
+      playSound();
+    });
+    return () => subscription.remove();
   }, [alarms]);
 
   // const sendNotification = async () => {

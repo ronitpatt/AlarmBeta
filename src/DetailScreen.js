@@ -13,16 +13,23 @@ import { soundObject } from './HomeScreen';
 // import { NavigationContainer } from '@react-navigation/native';
 let unique_id = 0;
 
-const DetailScreen = ({navigation}) => {
+const DetailScreen = ({route, navigation}) => {
   const { alarms, setAlarms, loaded, setLoaded} = useAlarms();
   const [isEnabled, setIsEnabled] = useState(false);
   const [text, onChangeText] = useState('Alarm 1');
+  let accessToken = '';
+  if (route.params != undefined) {
+    accessToken = route.params.accessToken;
+  }
 
   let setTime = new Date();
   let currTime = new Date().getTime();
   const repeat = 'Never';
   const label = 'Alarm 1';
-  const sound = 'Music';
+  let sound = '';
+  if (route.params != undefined) {
+    sound = route.params.name;
+  }
 
   useEffect(() => {
     (async () => {
@@ -72,10 +79,10 @@ const DetailScreen = ({navigation}) => {
     //     repeats: false
     //   },
     // });
-    if(!loaded)
-    {
-      loadSound();
-    }
+    // if(!loaded)
+    // {
+    //   loadSound();
+    // }
     const notificationId = await Notifications.scheduleNotificationAsync(schedulingOptions);
     
     return notificationId;
@@ -93,6 +100,10 @@ const DetailScreen = ({navigation}) => {
     console.log("currTime when you save alarm");
     console.log(currTime);
     // sendNotification();
+    let song = '';
+    if (sound != '') {
+      song = route.params.href
+    }
     const notificationId = await sendNotification();
     
     let am = false;
@@ -104,11 +115,13 @@ const DetailScreen = ({navigation}) => {
     const trimmedDate = setTime.toISOString().substring(0, 16); // "2023-10-30T17:02"
     console.log("unique ID");
     console.log(unique_id);
-    setAlarms(prev => [...prev, { index: unique_id, hour: hours, minutes: setTime.getMinutes(), am: am, notificationId: notificationId, alarmName: text}])
+    setAlarms(prev => [...prev, { index: unique_id, hour: hours, minutes: setTime.getMinutes(), am: am, notificationId: notificationId, alarmName: text, song: song}])
     unique_id++;
     
     navigation.navigate('Home', {
-        alarmTime: setTime.getTime()
+        alarmTime: setTime.getTime(),
+        song: song,
+        accessToken: accessToken,
     });
   };
 
@@ -167,7 +180,7 @@ const DetailScreen = ({navigation}) => {
         <Pressable onPress={pickSound} 
           style={styles.optionContainer}>
           <Text style={{position: 'relative', fontSize: 20}}>Sound</Text>
-          <Text style={{textAlign: 'right', fontSize: 20}}>{sound} {'>'} </Text>
+          <Text style={{textAlign: 'right', fontSize: 17}}>{sound} {'>'} </Text>
         </Pressable>
         
         <View style={styles.optionContainer}>
