@@ -8,6 +8,8 @@ import SoundScreen from './src/SoundScreen';
 import RepeatScreen from './src/RepeatScreen';
 import PlaylistScreen from './src/PlaylistScreen';
 import SongScreen from './src/SongScreen';
+import * as TaskManager from 'expo-task-manager';
+import * as Notifications from 'expo-notifications';
 
 
 const Stack = createStackNavigator();

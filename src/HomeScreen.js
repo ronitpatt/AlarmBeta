@@ -28,18 +28,6 @@ Notifications.setNotificationHandler({
   handleSuccess: async (notificationId) => (playSound())
 });
 
-const BACKGROUND_NOTIFICATION_TASK = 'BACKGROUND-NOTIFICATION-TASK';
-
-TaskManager.defineTask(BACKGROUND_NOTIFICATION_TASK, ({ data, error, executionInfo }) => {
-  console.log('Received a notification in the background!');
-  console.log(data);
-  console.log(error);
-  console.log(executionInfo);
-  // Do something with the notification data
-});
-
-Notifications.registerTaskAsync(BACKGROUND_NOTIFICATION_TASK);
-
 async function stopSound() {
   console.log('Stopping sound');
   try {
@@ -49,8 +37,14 @@ async function stopSound() {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    const responseJSON = await response.json();
-    console.log(responseJSON);
+    if (response.ok) { 
+      if(response.status !== 204) {
+        const responseJSON = await response.json();  
+        console.log(responseJSON);
+      }
+    } else {
+      console.error(`Response failed, status: ${response.status} ${response.statusText}`)
+    }
   }
   catch(error) {
     console.error(error)
@@ -71,8 +65,14 @@ async function playSound() {
           "uris": songArr
         })
       });
-      const responseJSON = await response.json();
-      console.log(responseJSON);
+      if (response.ok) { 
+        if(response.status !== 204) {
+          const responseJSON = await response.json();  
+          console.log(responseJSON);
+        }
+      } else {
+        console.error(`Response failed, status: ${response.status} ${response.statusText}`)
+      }
       songArr = [];
     }
     catch(error) {
@@ -116,11 +116,11 @@ const HomeScreen = ({route, navigation}) => {
         alert('No notification permissions!');
       }
     })();
-    const subscription = Notifications.addNotificationReceivedListener(notification => {
-      console.log(notification);
-      playSound();
-    });
-    return () => subscription.remove();
+    // const subscription = Notifications.addNotificationReceivedListener(notification => {
+    //   console.log(notification);
+    //   playSound();
+    // });
+    // return () => subscription.remove();
   }, [alarms]);
 
   // const sendNotification = async () => {
