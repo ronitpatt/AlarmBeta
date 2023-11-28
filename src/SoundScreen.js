@@ -23,6 +23,12 @@ const SoundScreen = ({navigation}) => {
       accessToken: accessToken})
   }
 
+  const showRecs = (recArr) => {
+    navigation.navigate('Songs', {
+      songsArr: recArr,
+      accessToken: accessToken});
+  }
+
   const redirectUri = AuthSession.makeRedirectUri({
     scheme: 'alarmify'
   });
@@ -169,6 +175,33 @@ const SoundScreen = ({navigation}) => {
     }
   };
 
+  const getRecs = async () => {
+    try {
+      const rec_url = 'https://api.spotify.com/v1/recommendations?limit=5&market=US&seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_genres=country%2C+pop%2C+rap&seed_tracks=0c6xIDDpzE81m2q797ordA';
+      const response = await fetch(rec_url, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+      const responseJSON = await response.json();
+      const songRecs = responseJSON.tracks;
+
+      const recArr = []
+      songRecs.forEach(rec => {
+        let recObj = {
+          name: rec.name,
+          img: rec.album.images,
+          href: rec.uri,
+        }
+        recArr.push(recObj)
+      })
+      return recArr;
+    }
+    catch (err) {
+      console.error(err)
+    }
+  }
 
     return (
         <View>
@@ -199,8 +232,12 @@ const SoundScreen = ({navigation}) => {
           <View style={styles.buttonStyle}>
             <Button
                 onPress={() => {
-                    console.log('You tapped the button!');
-                }}
+                    getRecs().then((recArr) => {
+                      showRecs(recArr);
+                    }).catch((error) => {
+                      console.error(error);
+                    });
+                  }}
                 title="Get a Recommendation"
                 /> 
           </View> 
