@@ -3,31 +3,38 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Default from '../assets/default_playlist.png';
 
 
-const getTracks = async (uri, accessToken) => { // https://developer.spotify.com/documentation/web-api/reference/get-playlists-tracks
+const getTracks = async (uri, accessToken, songArr) => { // https://developer.spotify.com/documentation/web-api/reference/get-playlists-tracks
     try {
-        console.log(uri)
-        const response = await fetch(uri, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${accessToken}`
+        while (uri !== null) {
+            // console.log(uri)
+            const response = await fetch(uri, {
+                method: 'GET',
+                headers: {
+                Authorization: `Bearer ${accessToken}`
+                }
+            });
+            const responseJSON = await response.json()
+            console.log(responseJSON.next);
+            const next = responseJSON.next;
+            const items = responseJSON.items;
+            //   console.log(items)
+            items.map(song => {
+                // console.log(song);
+                let songObj = {
+                    name: song.track.name,
+                    artists: song.track.artists,
+                    href: song.track.uri,
+                    img: song.track.album.images,
+                }
+                //console.log(songObj.img);
+                let num = songArr.push(songObj);
+            })
+            let newSongArr = getTracks(next, accessToken, songArr);
+            // console.log(songArr.length);
+            // console.log(songArr);
+            return newSongArr;
         }
-      });
-      const responseJSON = await response.json()
-      const items = responseJSON.items;
-    //   console.log(items)
-      const songArr = []
-      items.map(song => {
-        // console.log(song);
-        let songObj = {
-            name: song.track.name,
-            artists: song.track.artists,
-            href: song.track.uri,
-            img: song.track.album.images,
-        }
-        //console.log(songObj.img);
-        let num = songArr.push(songObj);
-      })
-      return songArr;
+        return songArr;
     }
     catch (err) {
         console.error(err)
@@ -55,7 +62,7 @@ const PlaylistScreen = ({route, navigation}) => {
           <View style={styles.playlists} key={playlist.name}>
               <Button style={styles.buttonTitle}
               onPress={() => {
-                  getTracks(playlist.tracks, accessToken).then((songsArr) => {
+                  getTracks(playlist.tracks, accessToken, []).then((songsArr) => {
                       navigation.navigate("Songs", {songsArr: songsArr, accessToken: accessToken});
                   }).catch((error) => {
                       console.error(error);

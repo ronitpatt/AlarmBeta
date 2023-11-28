@@ -134,41 +134,43 @@ const SoundScreen = ({navigation}) => {
     }
   };
 
-  async function componentDidMount() {
-    const tokenExpirationTime = expirationTime;
-    if (!tokenExpirationTime || new Date().getTime() > tokenExpirationTime) {
-      await refreshTokens();
-    } else {
-      this.setState({ accessTokenAvailable: true });
-    }
-  };
+  // async function componentDidMount() {
+  //   const tokenExpirationTime = expirationTime;
+  //   if (!tokenExpirationTime || new Date().getTime() > tokenExpirationTime) {
+  //     await refreshTokens();
+  //   } else {
+  //     this.setState({ accessTokenAvailable: true });
+  //   }
+  // };
 
-  const getPlaylists = async () => {
+  const getPlaylists = async (uri, accessToken, playlistArr) => {
     try {
-      // console.log(accessToken)
-      const response = await fetch('https://api.spotify.com/v1/me/playlists?limit=50', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
-      const responseJSON = await response.json()
-      // console.log(responseJSON)
-      const playlists = responseJSON.items;
-      // console.log(playlists);
-      const playlistArr = [];
-      playlists.forEach(playlist => {
-        let playlistObj = {
-          name: playlist.name,
-          tracks: playlist.tracks.href,
-          img: playlist.images,
-        }
-        let num = playlistArr.push(playlistObj)
-      });
-      //console.log(playlistArr)
+      while (uri !== null) {
+        // console.log(accessToken)
+        const response = await fetch(uri, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        const responseJSON = await response.json()
+        // console.log(responseJSON)
+        const playlists = responseJSON.items;
+        const next = responseJSON.next;
+        // console.log(playlists);
+        playlists.forEach(playlist => {
+          let playlistObj = {
+            name: playlist.name,
+            tracks: playlist.tracks.href,
+            img: playlist.images,
+          }
+          let num = playlistArr.push(playlistObj)
+        });
+        let newPlaylistArr = getPlaylists(next, accessToken, playlistArr);
+        //console.log(playlistArr)
+        return newPlaylistArr;
+      }
       return playlistArr;
-
-
     }
     catch (err) {
       console.error(err)
@@ -218,7 +220,7 @@ const SoundScreen = ({navigation}) => {
           <View style={styles.buttonStyle}>
             <Button
                 onPress={() => {
-                  getPlaylists().then((playlistArr) => {
+                  getPlaylists('https://api.spotify.com/v1/me/playlists?limit=50', accessToken, []).then((playlistArr) => {
                     // Now you can use playlistArr after it has been resolved
                     showPlaylists(playlistArr, accessToken);
                   }).catch((error) => {

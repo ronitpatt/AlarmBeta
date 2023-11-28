@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const SongScreen = ({route, navigation}) => {
     let songArr = route.params.songsArr;
+    console.log(songArr);
     let accessToken = route.params.accessToken;
 
   return (
@@ -17,9 +18,11 @@ const SongScreen = ({route, navigation}) => {
                 navigation.navigate('Details', {name: song.name, href: song.href, accessToken: accessToken});
             }}
             key={song.name} />
-            <Image style={styles.pic} source={{ 
-              uri: song.img[0].url, 
-            }} />
+            {song.img && song.img.length > 0 && song.img[0].url ? (
+                <Image source={{ uri: song.img[0].url }} style={styles.pic} />
+                ) : (
+                <Image source={{ uri: "https://drive.google.com/file/d/1eR2liZW-XvxVKnWdaYUB2IPY58kVevfz/view?usp=sharing" }} style={styles.pic} />
+            )}
             </View>
         ))}
     </View>
